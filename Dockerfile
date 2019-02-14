@@ -9,12 +9,12 @@ FROM ruby:2.5.3-alpine3.9
 MAINTAINER oran c <oranbusiness@gmail.com>
 
 # install dependencies for ruby on rails
-RUN apk add --no-cache --update build-base git libxslt-dev libxml2-dev postgresql-dev postgresql-client nodejs tzdata imagemagick
-RUN apk add --no-cache --update sqlite sqlite-dev
+RUN apk add --no-cache --update build-base git libxslt-dev libxml2-dev postgresql-dev postgresql-client nodejs tzdata imagemagick sqlite sqlite-dev && \
+                                apk -v cache clean
 # create folder named app in the docker container
 RUN mkdir /app
 # add contents of 'onboarding project" that are stored ./app
-ADD wgm-crm-onboarding /app
+ADD ./wgm-crm-onboarding /app
 
 # set the docker containers working directory ie pwd -> '/app'
 # when the docker container starts
@@ -22,7 +22,7 @@ WORKDIR /app
 RUN gem install bundler
 RUN bundler install
 RUN rails db:migrate
-#RUN rails db:seed
+RUN rails db:seed
 
 # expose port 300 to dockercontain2er
 EXPOSE 3000
