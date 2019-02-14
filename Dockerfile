@@ -8,6 +8,9 @@
 FROM ruby:2.5.3-alpine3.9
 MAINTAINER oran c <oranbusiness@gmail.com>
 
+# install dependencies for ruby on rails
+RUN apk add --no-cache --update build-base git libxslt-dev libxml2-dev postgresql-dev postgresql-client nodejs tzdata imagemagick
+RUN apk add --no-cache --update sqlite sqlite-dev
 # create folder named app in the docker container
 RUN mkdir /app
 # add contents of 'onboarding project" that are stored ./app
@@ -17,12 +20,18 @@ ADD ./app/wgm-crm-onboarding /app
 # when the docker container starts
 WORKDIR /app
 RUN gem install bundler
-#RUN bundler install --without projection ./app
+RUN bundler install
+RUN rails db:migrate
 #RUN rails db:seed
 
-# expose port 300 to dockercontainer
+# expose port 300 to dockercontain2er
 EXPOSE 3000
 
-ENTRYPOINT ["/bin/sh"]
+#ENTRYPOINT ["/bin/sh"]
 #CMD rails s; rake job:work
-#CMD ["bundle", "exec", "rails", "server", "-b", "0.0.0.0"]
+#                                                           CMD ["bundle", "exec", "rails", "server", "-b", "0.0.0.0"]
+#CMD ["sh", "-c", "rails", "server", "-b", "0.0.0.0"]
+#CMD /bin/sh -c rails server & rake jobs:work
+#v 3
+CMD ["/bin/sh", "-c", "rails server && rake jobs:work"]
+#v4 https://stackoverflow.com/questions/50481031/docker-multiple-commands-in-cmd-after-each-other
