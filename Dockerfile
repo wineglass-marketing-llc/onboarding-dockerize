@@ -4,7 +4,8 @@
 #cat config/application.yml
 #added application.yml
 # custom ruby image that has working version of 2.3.0
-FROM wisehackermonkey/alpine-ruby-2.3.0:1.0.0
+#FROM wisehackermonkey/alpine-ruby-2.3.0:1.0.0
+FROM ruby:2.5.3-alpine3.9
 MAINTAINER oran c <oranbusiness@gmail.com>
 
 # create folder named app in the docker container
@@ -15,7 +16,8 @@ ADD ./app/wgm-crm-onboarding /app
 # set the docker containers working directory ie pwd -> '/app'
 # when the docker container starts
 WORKDIR /app
-#RUN bundler install --without production
+RUN gem install bundler
+#RUN bundler install --without projection ./app
 #RUN rails db:seed
 
 # expose port 300 to dockercontainer
