@@ -14,7 +14,7 @@ RUN apk add --no-cache --update sqlite sqlite-dev
 # create folder named app in the docker container
 RUN mkdir /app
 # add contents of 'onboarding project" that are stored ./app
-ADD ./app/wgm-crm-onboarding /app
+ADD wgm-crm-onboarding /app
 
 # set the docker containers working directory ie pwd -> '/app'
 # when the docker container starts
