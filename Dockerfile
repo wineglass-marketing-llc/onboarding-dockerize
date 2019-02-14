@@ -49,8 +49,7 @@ FROM ruby:2.5.3-alpine3.9
 MAINTAINER oran c <oranbusiness@gmail.com>
 
 # install dependences
-RUN apk add --no-cache --update build-base git libxslt-dev libxml2-dev postgresql-dev postgresql-client nodejs tzdata imagemagick sqlite sqlite-dev && \
-                                apk -v cache clean
+RUN apk add --no-cache --update build-base git libxslt-dev libxml2-dev postgresql-dev postgresql-client nodejs tzdata imagemagick sqlite sqlite-dev
 # create folder named app in the docker container
 RUN mkdir /app
 # add contents of 'onboarding project" that are stored ./app
